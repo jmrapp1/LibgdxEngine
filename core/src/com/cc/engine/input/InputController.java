@@ -8,7 +8,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.jmrapp.terralegion.engine.camera.OrthoCamera;
+import com.cc.engine.camera.OrthoCamera;
 
 public class InputController implements GestureListener {
 

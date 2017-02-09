@@ -3,7 +3,7 @@ package com.cc.engine.views.drawables.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.jmrapp.terralegion.engine.utils.Timer;
+import com.cc.engine.utils.Timer;
 
 public class FadingTexture extends UIElement {
 

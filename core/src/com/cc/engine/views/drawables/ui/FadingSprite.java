@@ -3,7 +3,7 @@ package com.cc.engine.views.drawables.ui;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.jmrapp.terralegion.engine.utils.Timer;
+import com.cc.engine.utils.Timer;
 
 public class FadingSprite extends UIElement {
 

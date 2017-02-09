@@ -1,6 +1,6 @@
 package com.cc.engine.input;
 
-import com.jmrapp.terralegion.engine.camera.OrthoCamera;
+import com.cc.engine.camera.OrthoCamera;
 
 public interface InputListener {
 

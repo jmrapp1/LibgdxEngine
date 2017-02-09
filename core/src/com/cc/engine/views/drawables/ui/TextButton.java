@@ -2,7 +2,7 @@ package com.cc.engine.views.drawables.ui;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.jmrapp.terralegion.engine.views.drawables.Drawable;
+import com.cc.engine.views.drawables.Drawable;
 
 public class TextButton extends PictureButton {
 
@@ -14,12 +14,13 @@ public class TextButton extends PictureButton {
 		this.text = text;
 		this.font = font;
 	}
-	
+
+	//TODO: Implement center functionality
 	@Override
 	public void render(SpriteBatch sb) {
 		super.render(sb);
-		float width = font.getBounds(text).width;
-		float height = font.getBounds(text).height;
+		//float width = font.getBounds(text).width;
+		//float height = font.getBounds(text).height;
 		font.draw(sb, text, x + (drawable.getWidth() / 2) - (width / 2), y + (drawable.getHeight() / 2) + (height / 2));
 	}
 	

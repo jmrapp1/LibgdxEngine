@@ -2,7 +2,7 @@ package com.cc.engine.views.drawables.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.jmrapp.terralegion.engine.views.drawables.Drawable;
+import com.cc.engine.views.drawables.Drawable;
 
 public class PictureButton extends Button {
 

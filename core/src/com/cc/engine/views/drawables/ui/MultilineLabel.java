@@ -16,17 +16,18 @@ public class MultilineLabel extends UIElement {
 		this.center = center;
 	}
 
+	//TODO: Implement center functionality and multiline functionality
 	public void render(SpriteBatch sb) {
 		if (center) {
 			for (int i = 0; i < text.length; i++) {
-				float width = font.getBounds(text[i]).width;
-				float height = font.getBounds(text[i]).height;
-				font.draw(sb, text[i], x - (width / 2), y - (height / 2) - (height + 5) * i);
+				//float width = font.getBounds(text[i]).width;
+				//float height = font.getBounds(text[i]).height;
+				//font.draw(sb, text[i], x - (width / 2), y - (height / 2) - (height + 5) * i);
 			}
 		} else {
 			for (int i = 0; i < text.length; i++) {
-				float height = font.getBounds(text[i]).height;
-				font.draw(sb, text[i], x, y - (height + 5) * i);
+				//float height = font.getBounds(text[i]).height;
+				//font.draw(sb, text[i], x, y - (height + 5) * i);
 			}
 		}
 	}

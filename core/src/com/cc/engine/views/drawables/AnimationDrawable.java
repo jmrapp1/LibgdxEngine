@@ -107,7 +107,7 @@ public class AnimationDrawable implements Drawable {
 
     @Override
     public TextureRegion getTextureRegion() {
-        return animation.getKeyFrame(stateTime);
+        return (TextureRegion) animation.getKeyFrame(stateTime);
     }
 
     @Override
@@ -117,12 +117,12 @@ public class AnimationDrawable implements Drawable {
 
     @Override
     public float getWidth() {
-        return animation.getKeyFrame(stateTime).getRegionWidth() - 2; // TODO fix size of player_animated.png to fit within 1 unit
+        return ((TextureRegion) animation.getKeyFrame(stateTime)).getRegionWidth() - 2; // TODO fix size of player_animated.png to fit within 1 unit
     }
 
     @Override
     public float getHeight() {
-        return animation.getKeyFrame(stateTime).getRegionHeight() - 4;  // TODO fix size of player_animated.png to fit within 1 unit
+        return ((TextureRegion) animation.getKeyFrame(stateTime)).getRegionHeight() - 4;  // TODO fix size of player_animated.png to fit within 1 unit
     }
 
     @Override

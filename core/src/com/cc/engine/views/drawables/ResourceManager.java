@@ -68,16 +68,17 @@ public class ResourceManager {
 	public BitmapFont getFont(String id, String fileFNT, String filePNG, Color color, float scale) {
 		BitmapFont font = new BitmapFont(Gdx.files.internal(fileFNT),Gdx.files.internal(filePNG),false);
 		font.setColor(color);
-		font.setScale(scale);
 		return font;
 	}
-	
+
+	//TODO: Fix and implement this method
 	public BitmapFont getFont(String id, String file, Color color, int size) {
 		FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal(file));
-		BitmapFont font = gen.generateFont(size);
-		font.setColor(color);
-		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		return font;
+		//BitmapFont font = gen.generateFont(size);
+		//font.setColor(color);
+		//font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		//return font;
+		return null;
 	}
 	
 	public void loadFont(String id, BitmapFont font) {

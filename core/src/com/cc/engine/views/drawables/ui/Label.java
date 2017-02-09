@@ -15,12 +15,13 @@ public class Label extends UIElement {
 		this.font = font;
 		this.center = center;
 	}
-	
+
+	//TODO: Implement center functionality
 	public void render(SpriteBatch sb) {
 		if (center) {
-			float width = font.getBounds(text).width;
-			float height = font.getBounds(text).height;
-			font.draw(sb, text, x - (width / 2), y - (height / 2));
+			//float width = font.getBounds(text).width;
+			//float height = font.getBounds(text).height;
+			//font.draw(sb, text, x - (width / 2), y - (height / 2));
 		} else {
 			font.draw(sb, text, x, y);
 		}

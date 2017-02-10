@@ -23,7 +23,6 @@ public class EngineMain extends ApplicationAdapter {
 		sb.enableBlending();
 		instantiateSettings();
 		Gdx.input.setCatchBackKey(true); //Stops from exiting when back button pressed
-
 	}
 
 	@Override

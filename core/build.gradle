@@ -1,4 +1,7 @@
 apply plugin: "java"
+apply plugin: "idea"
+apply plugin: 'maven-publish'
+
 sourceCompatibility = 1.6
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 sourceSets.main.java.srcDirs = ["src/"]
@@ -6,4 +9,22 @@ eclipse.project {
     name = appName + "-core"
 }
 dependencies {
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier "sources"
+}
+
+publishing {
+    publications {
+        PublicationToMavenLocal(MavenPublication) {
+            from components.java
+            artifact sourceJar
+
+            groupId 'com.cc.engine'
+            artifactId 'core'
+            version '1.0'
+        }
+    }
 }

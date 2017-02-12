@@ -90,12 +90,14 @@ public class OrthoCamera extends OrthographicCamera {
 		VirtualViewport virtualViewport = new VirtualViewport(Settings.getWidth(), Settings.getHeight());
 		setVirtualViewport(virtualViewport);  
 		updateViewport(Settings.getWidth(), Settings.getHeight());
+		update();
 	}
 
 	public void resize(int width, int height) {
 		VirtualViewport virtualViewport = new VirtualViewport(width, height);
 		setVirtualViewport(virtualViewport);  
 		updateViewport(Settings.getWidth(), Settings.getHeight());
+		update();
 	}
 	
 }

@@ -14,7 +14,6 @@ public class ScreenManager {
 		last = current;
 		current = s;
 		current.create();
-		current.resize(Settings.getWidth(), Settings.getHeight());
 	}
 	
 	public static void goBack() {

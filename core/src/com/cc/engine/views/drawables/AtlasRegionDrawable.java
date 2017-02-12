@@ -28,6 +28,11 @@ public class AtlasRegionDrawable implements Drawable {
 		sb.draw(atlasRegion, x, y);
 	}
 
+	@Override
+	public void dispose() {
+		textureRegion.getTexture().dispose();
+	}
+
 	public TextureAtlas.AtlasRegion getTexture() {
 		return atlasRegion;
 	}

@@ -106,6 +106,11 @@ public class AnimationDrawable implements Drawable {
     }
 
     @Override
+    public void dispose() {
+        getTextureRegion().getTexture().dispose();
+    }
+
+    @Override
     public TextureRegion getTextureRegion() {
         return (TextureRegion) animation.getKeyFrame(stateTime);
     }

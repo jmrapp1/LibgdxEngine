@@ -16,44 +16,35 @@ import java.util.Map;
 public class ResourceManager {
 
 	private static ResourceManager instance = new ResourceManager();
-	private final HashMap<String, Sprite> sprites = new HashMap<String, Sprite>();
-	private final HashMap<String, Texture> textures = new HashMap<String, Texture>();
 	private final HashMap<String, BitmapFont> fonts = new HashMap<String, BitmapFont>();
 	private final HashMap<String, Drawable> drawables = new HashMap<String, Drawable>();
 
 	private ResourceManager() {
 	}
-	
-	public void loadTexture(String id, String file) {
-		Texture t = new Texture(Gdx.files.internal(file));
-		t.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
-		textures.put(id, t);
-	}
-	
-	public Sprite loadSprite(String id, String file) {
-		Sprite sprite = new Sprite(new Texture(Gdx.files.internal(file)));
-		sprite.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Nearest);
-		sprites.put(id, sprite);
-		return sprite;
+
+
+	public SpriteDrawable loadSpriteDrawable(String id, String file) {
+		SpriteDrawable spriteDrawable = new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal(file))));
+		spriteDrawable.getSprite().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Nearest);
+		drawables.put(id, spriteDrawable);
+		return spriteDrawable;
 	}
 
 	public void loadTexturedDrawable(String id, String file) {
 		Texture t = new Texture(Gdx.files.internal(file));
 		t.setFilter(TextureFilter.Linear, TextureFilter.Nearest);
-		drawables.put(id, new TexturedDrawable(t));
+		drawables.put(id, new TextureDrawable(t));
 	}
 
 	public void loadAtlasRegionDrawable(String id, TextureAtlas atlas, String region) {
 		TextureAtlas.AtlasRegion atlasRegion = atlas.findRegion(region);
 		drawables.put(id, new AtlasRegionDrawable(atlasRegion));
 	}
-	
-	public Sprite loadSprite(String id, String file, float scaleX, float scaleY) {
-		Sprite sprite = new Sprite(new Texture(Gdx.files.internal(file)));
-		sprite.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Nearest);
-		sprite.setScale(scaleX, scaleY);
-		sprite.setOrigin(0, 0);
-		sprites.put(id, sprite);
+
+	public SpriteDrawable loadAndResizeSpriteDrawable(String id, String loc, float sx, float sy) {
+		SpriteDrawable sprite = loadSpriteDrawable(id, loc);
+		sprite.getSprite().setScale(sx, sy);
+		sprite.getSprite().setOrigin(0, 0);
 		return sprite;
 	}
 	
@@ -84,28 +75,34 @@ public class ResourceManager {
 	public void loadFont(String id, BitmapFont font) {
 		fonts.put(id, font);
 	}
-	
+
 	public BitmapFont getFont(String id) {
 		return fonts.get(id);
 	}
-	
-	public Texture getTexture(String id) {
-		return textures.get(id);
+
+	public TextureDrawable getTextureDrawable(String id) {
+		Drawable drawable = drawables.get(id);
+		if (drawable != null)
+			return (TextureDrawable) drawable;
+		return null;
+	}
+
+	public SpriteDrawable getSpriteDrawable(String id) {
+		Drawable drawable = drawables.get(id);
+		if (drawable != null)
+			return (SpriteDrawable) drawable;
+		return null;
 	}
 
 	public Drawable getDrawable(String id) {
 		return drawables.get(id);
 	}
 	
-	public Sprite getSprite(String id) {
-		return sprites.get(id);
-	}
-	
 	public void dispose() {
-		Iterator it = textures.entrySet().iterator();
+		Iterator it = drawables.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry pair = (Map.Entry)it.next();
-	        ((Texture)pair.getValue()).dispose();
+	        ((Drawable)pair.getValue()).dispose();
 	        it.remove(); // avoids a ConcurrentModificationException
 	    }
 	    

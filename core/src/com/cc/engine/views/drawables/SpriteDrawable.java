@@ -30,6 +30,11 @@ public class SpriteDrawable implements Drawable {
 		sprite.draw(sb);
 	}
 
+	@Override
+	public void dispose() {
+		sprite.getTexture().dispose();
+	}
+
 	public Sprite getSprite() {
 		return sprite;
 	}

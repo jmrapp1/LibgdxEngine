@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-public class TexturedDrawable implements Drawable {
+public class TextureDrawable implements Drawable {
 
 	private final Texture texture;
 	private TextureRegion textureRegion;
 	
-	public TexturedDrawable(Texture texture) {
+	public TextureDrawable(Texture texture) {
 		this.texture = texture;
 	}
 	
@@ -27,7 +27,12 @@ public class TexturedDrawable implements Drawable {
 	public void render(SpriteBatch sb, float x, float y) {
 		sb.draw(texture, x, y);
 	}
-	
+
+	@Override
+	public void dispose() {
+		texture.dispose();
+	}
+
 	public Texture getTexture() {
 		return texture;
 	}
@@ -42,7 +47,7 @@ public class TexturedDrawable implements Drawable {
 
 	@Override
 	public Drawable getInstance() {
-		return new TexturedDrawable(texture);
+		return new TextureDrawable(texture);
 	}
 
 	@Override

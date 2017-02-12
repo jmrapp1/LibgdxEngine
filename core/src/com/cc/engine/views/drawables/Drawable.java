@@ -12,6 +12,8 @@ public interface Drawable {
 
 	void render(SpriteBatch sb, float x, float y);
 
+	void dispose();
+
 	TextureRegion getTextureRegion();
 
 	Drawable getInstance();
@@ -19,7 +21,7 @@ public interface Drawable {
 	float getWidth();
 	
 	float getHeight();
-	
+
 	Object getRaw();
 	
 }

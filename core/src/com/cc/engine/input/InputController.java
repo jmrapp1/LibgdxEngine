@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.cc.engine.camera.OrthoCamera;
 
+import java.security.InvalidParameterException;
+
 public class InputController {
 
 	/** Singleton instance of the class */
@@ -30,7 +32,7 @@ public class InputController {
 	 */
 	public void addInputProcessor(InputProcessor ip) {
 		processors.addProcessor(ip);
-		Gdx.input.setInputProcessor(processors);
+		reattachInputProcessors();
 	}
 
 	/**
@@ -40,13 +42,32 @@ public class InputController {
 	 */
 	public void removeInputProcessor(InputProcessor ip) {
 		processors.removeProcessor(ip);
-		Gdx.input.setInputProcessor(processors);
+		reattachInputProcessors();
 	}
 
 	/** Clear all processors except for the GestureDetector. */
 	public void clearProcessors() {
 		processors.clear();
+		reattachInputProcessors();
+	}
+
+	public void reattachInputProcessors () {
 		Gdx.input.setInputProcessor(processors);
+	}
+
+	/**
+	 * Adds the dialog processor (usually a stage)
+	 * @param ip
+	 */
+	public void setDialogProcessor(InputProcessor ip) {
+		Gdx.input.setInputProcessor(ip);
+	}
+
+	/**
+	 * Removes the current dialog processor
+	 */
+	public void removeDialogProcessor() {
+		reattachInputProcessors();
 	}
 
 	/**

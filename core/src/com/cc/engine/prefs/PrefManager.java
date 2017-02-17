@@ -37,7 +37,7 @@ public class PrefManager {
         for (byte b : bytes) {
             bytesAsString += b + ",";
         }
-        prefs.putString(key, bytesAsString);
+        putPref(key, bytesAsString);
         oos.flush();
         oos.close();
     }

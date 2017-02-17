@@ -146,6 +146,7 @@ public class Carousel extends ScrollPane {
     public void draw(Batch batch, float alpha)
     {
         super.draw(batch, alpha);
+        // TODO: Create way to show what the current page is
     }
 
 }

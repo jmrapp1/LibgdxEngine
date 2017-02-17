@@ -28,7 +28,7 @@ public class EngineMain extends ApplicationAdapter {
 	@Override
 	public void render() {
 		if (!paused) {
-			Timer.getInstance().update();
+			Timer.update();
 
 			if (ScreenManager.getCurrent() != null)
 				ScreenManager.getCurrent().update();

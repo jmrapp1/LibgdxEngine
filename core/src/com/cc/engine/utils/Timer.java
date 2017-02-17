@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 
 public class Timer {
 
-	/** Singleton instance of the class. */
-	private static Timer instance = new Timer();
-
 	/** The total time elapsed since the first call to the update() method. */
 	private static float timeElapsed;
 
@@ -23,7 +20,7 @@ public class Timer {
 	/**
 	 * Updates the overall elapsed time and the game time.
 	 */
-	public void update() {
+	public static void update() {
 		timeElapsed += Gdx.graphics.getDeltaTime();
 		if (startGameTime) {
 			gameTime += Gdx.graphics.getDeltaTime();
@@ -65,15 +62,6 @@ public class Timer {
 	public static void resetGameTime() {
 		gameTime = 0;
 		startGameTime = false;
-	}
-
-	/**
-	 * Singleton method that returns the single instance of the class.
-	 *
-	 * @return The Timer instance
-	 */
-	public static Timer getInstance() {
-		return instance;
 	}
 	
 }

@@ -21,15 +21,17 @@ public abstract class ParticleEffect {
 	}
 	
 	public void update() {
-		for (int i = 0; i < systems.size(); i++) {
-			ParticleSystem sys = systems.get(i);
-			if (sys.shouldDispose) {
-				systems.remove(sys);
-				if (systems.size() == 0) {
-					shouldDispose = true;
+		if (!world.isLocked()) {
+			for (int i = 0; i < systems.size(); i++) {
+				ParticleSystem sys = systems.get(i);
+				if (sys.shouldDispose) {
+					systems.remove(sys);
+					if (systems.size() == 0) {
+						shouldDispose = true;
+					}
+				} else {
+					sys.update();
 				}
-			} else {
-				sys.update();
 			}
 		}
 	}

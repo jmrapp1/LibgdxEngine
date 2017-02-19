@@ -109,7 +109,7 @@ public abstract class AbstractParticle {
 
 	public void update() {
 		if (checkPhysics) {
-			if (body != null) {
+			if (body != null && isActive()) {
 				position.set((body.getPosition().x * PIXELS_TO_METERS) - (sprite.getWidth() * sprite.getScaleX() / 2), (body.getPosition().y * PIXELS_TO_METERS) - (sprite.getHeight() * sprite.getScaleY() / 2));
 				sprite.setPosition(position.x, position.y);
 				sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);

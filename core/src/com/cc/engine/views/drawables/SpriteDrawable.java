@@ -30,6 +30,10 @@ public class SpriteDrawable implements Drawable {
 		sprite.draw(sb);
 	}
 
+	public void render(SpriteBatch sb) {
+		sprite.draw(sb);
+	}
+
 	@Override
 	public void dispose() {
 		sprite.getTexture().dispose();
@@ -46,7 +50,7 @@ public class SpriteDrawable implements Drawable {
 
 	@Override
 	public Drawable getInstance() {
-		return new SpriteDrawable(sprite);
+		return new SpriteDrawable(new Sprite(sprite));
 	}
 
 	@Override

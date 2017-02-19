@@ -107,8 +107,9 @@ public class ParticleSystem {
 				if (particles.size() == 0) {
 					shouldDispose = true;
 				}
+			} else {
+				p.update();
 			}
-			p.update();
 		}
 	}
 	

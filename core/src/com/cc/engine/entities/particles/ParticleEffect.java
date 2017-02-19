@@ -21,7 +21,7 @@ public abstract class ParticleEffect {
 	}
 	
 	public void update() {
-		if (!world.isLocked()) {
+		if (world != null && !world.isLocked()) {
 			for (int i = 0; i < systems.size(); i++) {
 				ParticleSystem sys = systems.get(i);
 				if (sys.shouldDispose) {

@@ -28,9 +28,9 @@ public class ParticleSystem {
 	protected Vector2 maxGravityResBounds;
 	protected Vector2 densityBounds;
 	protected Vector2 restitutionBounds;
+	protected Vector2 delayBetweenSpawn;
 	protected Color startColor;
 	protected Color endColor;
-	protected float delayBetweenSpawn;
 	protected float alphaDecay;
 	protected float friction;
 	protected boolean checkPhysics;
@@ -49,7 +49,7 @@ public class ParticleSystem {
 	public ParticleSystem(AbstractParticlePool pool, World world, Sprite[] sprites, int maxParticleCount, ParticleShapeType shapeType, Vector2 position, Vector2 lifeTimeBounds,
 						  Vector2 minVelocityBounds, Vector2 maxVelocityBounds, Vector2 angleBounds, Vector2 minSpread, Vector2 maxSpread,
 						  Vector2 rotationVelBounds, Vector2 scaleBounds, Vector2 alphaBounds, Vector2 minGravityResBounds,
-						  Vector2 maxGravityResBounds, Vector2 densityBounds, Vector2 restitutionBounds, Color startColor, Color endColor, float delayBetweenSpawn, float alphaDecay,
+						  Vector2 maxGravityResBounds, Vector2 densityBounds, Vector2 restitutionBounds, Color startColor, Color endColor, Vector2 delayBetweenSpawn, float alphaDecay,
 						  float friction, boolean checkPhysics, boolean constantSystem, boolean collideWithWorld) {
 		particles = new ArrayList<AbstractParticle>(maxParticleCount);
 		this.pool = pool;
@@ -77,8 +77,9 @@ public class ParticleSystem {
 		this.alphaDecay = alphaDecay;
 		this.friction = friction;
 		this.checkPhysics = checkPhysics;
-		this.collideWithWorld = collideWithWorld; 
-		if (delayBetweenSpawn == 0) {
+		this.collideWithWorld = collideWithWorld;
+		this.constantSystem = constantSystem;
+		if (delayBetweenSpawn.equals(Vector2.Zero)) {
 			for (int i = 0; i < maxParticleCount; i++) {
 				createParticle();
 			}
@@ -87,14 +88,15 @@ public class ParticleSystem {
 	}
 	
 	public void update() {
-		if (delayBetweenSpawn > 0) {
-			if ((particles.size() < maxParticleCount && constantSystem) || !spawnedAll) {
-				if (Timer.getGameTimeElapsed() - lastSpawn >= delayBetweenSpawn) {
+		if (!delayBetweenSpawn.equals(Vector2.Zero)) {
+			if ((particles.size() < maxParticleCount && !spawnedAll) || constantSystem) {
+				float delay = MathUtils.random(delayBetweenSpawn.x, delayBetweenSpawn.x);
+				if (Timer.getGameTimeElapsed() - lastSpawn >= delay && !world.isLocked()) {
 					createParticle();
 					lastSpawn = Timer.getGameTimeElapsed();
 				}
 			} else {
-				if (!spawnedAll) {
+				if (!spawnedAll && !constantSystem) {
 					spawnedAll = true;
 				}
 			}
@@ -104,7 +106,7 @@ public class ParticleSystem {
 			if (!p.isActive()) {
 				p.dispose(pool, world);
 				particles.remove(p);
-				if (particles.size() == 0) {
+				if (particles.size() == 0 && !constantSystem) {
 					shouldDispose = true;
 				}
 			} else {
@@ -123,7 +125,7 @@ public class ParticleSystem {
 			particles.get(i).dispose(pool, world);
 	}
 	
-	private void createParticle() {
+	protected void createParticle() {
 		AbstractParticle particle = pool.getParticle();
 		Vector2 pos = position;
 		Sprite sprite = sprites[MathUtils.random(0, sprites.length - 1)];
@@ -141,7 +143,7 @@ public class ParticleSystem {
 	
 	private Vector2 calculateDirection(float angle) {
 		float rads = angle * (MathUtils.PI / 180f);
-		return new Vector2((float)MathUtils.cos(rads), (float)MathUtils.sin(rads)).nor();
+		return new Vector2(MathUtils.cos(rads), MathUtils.sin(rads)).nor();
 	}
 	
 }

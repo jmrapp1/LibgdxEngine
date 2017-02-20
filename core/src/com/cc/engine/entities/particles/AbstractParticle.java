@@ -135,6 +135,10 @@ public abstract class AbstractParticle {
 		removeBody(world);
 	}
 
+	public void setToDispose() {
+		active = false;
+	}
+
 	protected abstract void removeBody(World world);
 
 	public boolean isActive() {

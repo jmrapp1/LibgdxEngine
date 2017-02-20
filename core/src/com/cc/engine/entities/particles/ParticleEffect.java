@@ -49,5 +49,11 @@ public abstract class ParticleEffect {
 	public boolean shouldDispose() {
 		return shouldDispose;
 	}
+
+	public void setToDispose() {
+		shouldDispose = true;
+		for (ParticleSystem sys : systems)
+			sys.setToDispose();
+	}
 	
 }

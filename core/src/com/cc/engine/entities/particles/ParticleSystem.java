@@ -140,7 +140,13 @@ public class ParticleSystem {
 		particle.create(shapeType, pos, calculateDirection(MathUtils.random(angleBounds.x, angleBounds.y)), minGravityResBounds != null && maxGravityResBounds != null ? new Vector2(MathUtils.random(minGravityResBounds.x, maxGravityResBounds.x), MathUtils.random(minGravityResBounds.y, maxGravityResBounds.y)) : null, new Vector2(MathUtils.random(minVelocityBounds.x, maxVelocityBounds.x), MathUtils.random(minVelocityBounds.y, maxVelocityBounds.y)), new Sprite(sprite), startColor, endColor, MathUtils.random(lifeTimeBounds.x, lifeTimeBounds.y), friction, alphaBounds != null ? MathUtils.random(alphaBounds.x, alphaBounds.y) : 1, alphaDecay, rotationVelBounds != null ? MathUtils.random(rotationVelBounds.x, rotationVelBounds.y) : 0, MathUtils.random(densityBounds.x, densityBounds.y), MathUtils.random(restitutionBounds.x, restitutionBounds.y), true, checkPhysics, collideWithWorld);
 		particles.add(particle);
 	}
-	
+
+	public void setToDispose() {
+		shouldDispose = true;
+		for (int i = 0; i < particles.size(); i++)
+			particles.get(i).setToDispose();
+	}
+
 	private Vector2 calculateDirection(float angle) {
 		float rads = angle * (MathUtils.PI / 180f);
 		return new Vector2(MathUtils.cos(rads), MathUtils.sin(rads)).nor();

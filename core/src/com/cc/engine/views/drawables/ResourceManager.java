@@ -74,6 +74,15 @@ public class ResourceManager {
 		return font;
 	}
 
+	public Skin loadSkinWithDefaultFont(String id, String skinAtlasPath, String skinJsonPath, BitmapFont font) {
+		Skin skin = new Skin();
+		skin.addRegions(new TextureAtlas(Gdx.files.internal(skinAtlasPath)));
+		skin.add("default-font", font, BitmapFont.class);
+		skin.load(Gdx.files.internal(skinJsonPath));
+		skins.put(id, skin);
+		return skin;
+	}
+
 	public BitmapFont loadFreeTypeFont(String id, String file, FreeTypeFontGenerator.FreeTypeFontParameter params) {
 		FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal(file));
 		BitmapFont font = gen.generateFont(params);

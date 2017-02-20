@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,6 +19,7 @@ public class ResourceManager {
 	private static ResourceManager instance = new ResourceManager();
 	private final HashMap<String, BitmapFont> fonts = new HashMap<String, BitmapFont>();
 	private final HashMap<String, Drawable> drawables = new HashMap<String, Drawable>();
+	private final HashMap<String, Skin> skins = new HashMap<String, Skin>();
 
 	private ResourceManager() {
 	}
@@ -47,37 +49,44 @@ public class ResourceManager {
 		sprite.getSprite().setOrigin(0, 0);
 		return sprite;
 	}
-	
-	public void loadFont(String id, String fileFNT, String filePNG, Color color, float scale) {
-		fonts.put(id, getFont(id, fileFNT, filePNG, color, scale));
+
+	public Skin loadSkin(String id, String path) {
+		Skin skin = new Skin(Gdx.files.internal(path));
+		skins.put(id, skin);
+		return skin;
 	}
-	
-	public void loadFont(String id, String file, Color color, int size) {
-		fonts.put(id, getFont(id, file, color, size));
-	}
-	
-	public BitmapFont getFont(String id, String fileFNT, String filePNG, Color color, float scale) {
+
+	public BitmapFont loadBitmapFont(String id, String fileFNT, String filePNG, Color color, float scale) {
 		BitmapFont font = new BitmapFont(Gdx.files.internal(fileFNT),Gdx.files.internal(filePNG),false);
 		font.setColor(color);
 		return font;
 	}
 
-	//TODO: Fix and implement this method
-	public BitmapFont getFont(String id, String file, Color color, int size) {
+	public BitmapFont loadTrueTypeFont(String id, String file, Color color, int size) {
 		FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal(file));
-		//BitmapFont font = gen.generateFont(size);
-		//font.setColor(color);
-		//font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		//return font;
-		return null;
-	}
-	
-	public void loadFont(String id, BitmapFont font) {
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.size = size;
+		parameter.color = color;
+		parameter.minFilter = TextureFilter.Linear;
+		parameter.magFilter = TextureFilter.Linear;
+		BitmapFont font = gen.generateFont(parameter);
 		fonts.put(id, font);
+		return font;
+	}
+
+	public BitmapFont loadFreeTypeFont(String id, String file, FreeTypeFontGenerator.FreeTypeFontParameter params) {
+		FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal(file));
+		BitmapFont font = gen.generateFont(params);
+		fonts.put(id, font);
+		return font;
 	}
 
 	public BitmapFont getFont(String id) {
 		return fonts.get(id);
+	}
+
+	public Skin getSkin(String id) {
+		return skins.get(id);
 	}
 
 	public TextureDrawable getTextureDrawable(String id) {

@@ -103,14 +103,16 @@ public class ParticleSystem {
 		}
 		for (int i = 0; i < particles.size(); i++) {
 			AbstractParticle p = particles.get(i);
-			if (!p.isActive()) {
-				p.dispose(pool, world);
-				particles.remove(p);
-				if (particles.size() == 0 && !constantSystem) {
-					shouldDispose = true;
+			if (p != null) {
+				if (!p.isActive()) {
+					p.dispose(pool, world);
+					particles.remove(p);
+					if (particles.size() == 0 && !constantSystem) {
+						shouldDispose = true;
+					}
+				} else {
+					p.update();
 				}
-			} else {
-				p.update();
 			}
 		}
 	}

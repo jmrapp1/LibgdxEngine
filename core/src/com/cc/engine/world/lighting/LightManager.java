@@ -26,12 +26,16 @@ public class LightManager {
     }
 
     public void update() {
-        rayHandler.update();
+        if (rayHandler != null) {
+            rayHandler.update();
+        }
     }
 
     public void render(OrthographicCamera camera) {
-        rayHandler.setCombinedMatrix(camera);
-        rayHandler.updateAndRender();
+        if (rayHandler != null) {
+            rayHandler.setCombinedMatrix(camera);
+            rayHandler.updateAndRender();
+        }
     }
 
     public RayHandler getRayHandler() {
@@ -39,7 +43,10 @@ public class LightManager {
     }
 
     public void dispose() {
-        rayHandler.dispose();
+        if (rayHandler != null) {
+            rayHandler.dispose();
+            rayHandler = null;
+        }
     }
 
     public static LightManager getInstance() {

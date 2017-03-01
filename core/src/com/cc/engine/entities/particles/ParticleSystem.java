@@ -118,8 +118,12 @@ public class ParticleSystem {
 	}
 	
 	public void render(SpriteBatch sb) {
-		for (int i = 0; i < particles.size(); i++)
-			particles.get(i).render(sb);
+		for (int i = 0; i < particles.size(); i++) {
+			AbstractParticle p = particles.get(i);
+			if (p.isActive()) {
+				particles.get(i).render(sb);
+			}
+		}
 	}
 	
 	public void dispose() {

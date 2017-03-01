@@ -128,7 +128,6 @@ public class Carousel extends ScrollPane {
     @Override
     public void setScrollX(float pixels) {
         super.setScrollX(pixels);
-        final float width = getWidth();
         final float scrollX = getScrollX();
         float pageX = 0;
         float pageWidth = 0;

@@ -1,5 +1,7 @@
 package com.cc.engine.entities.particles;
 
+import com.badlogic.gdx.physics.box2d.World;
+
 import java.util.ArrayList;
 
 public abstract class AbstractParticlePool {
@@ -9,16 +11,16 @@ public abstract class AbstractParticlePool {
 	public AbstractParticlePool() {
 	}
 	
-	public AbstractParticle getParticle() {
+	public AbstractParticle getParticle(World world) {
 		if (pool.size() > 0) {
 			AbstractParticle p = pool.get(pool.size() - 1);
 			if (p.getBody() == null)
 				return p;
 		}
-		return getNewParticle();
+		return getNewParticle(world);
 	}
 
-	protected abstract AbstractParticle getNewParticle();
+	protected abstract AbstractParticle getNewParticle(World world);
 
 	public void putParticle(AbstractParticle particle) {
 		pool.add(particle);

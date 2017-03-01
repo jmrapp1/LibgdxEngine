@@ -128,7 +128,7 @@ public class ParticleSystem {
 	}
 	
 	protected void createParticle() {
-		AbstractParticle particle = pool.getParticle();
+		AbstractParticle particle = pool.getParticle(world);
 		Vector2 pos = position;
 		Sprite sprite = sprites[MathUtils.random(0, sprites.length - 1)];
 		if (minSpread != null && maxSpread != null) {

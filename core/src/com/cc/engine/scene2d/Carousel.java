@@ -20,6 +20,8 @@ public class Carousel extends ScrollPane {
 
     private boolean wasPanDragFling = false;
 
+    private boolean drawPageIndicator = true;
+
     private float pageSpacing;
 
     private Table content;
@@ -51,6 +53,10 @@ public class Carousel extends ScrollPane {
         content.defaults().space(50);
         super.setWidget(content);
         shapeRenderer = new ShapeRenderer();
+    }
+
+    public void setDrawPageIndicator(boolean drawPageIndicator) {
+        this.drawPageIndicator = drawPageIndicator;
     }
 
     public void addPages(Actor... pages) {
@@ -171,22 +177,24 @@ public class Carousel extends ScrollPane {
     @Override
     public void draw(Batch batch, float alpha) {
         super.draw(batch, alpha);
-        // TODO: Create way to show what the current page is
-        Array<Actor> pages = getPages();
-        int currentPageIndex = getCurrentPageIndex();
-        float x, y = getY() + 15, radius = 10;
-        float widthOfAllCircles = (pages.size - 1) * (radius * 2);
-        for (int i = 0; i < pages.size; i++) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            if (currentPageIndex == i) {
-                shapeRenderer.setColor(Color.GRAY);
-            } else {
-                shapeRenderer.setColor(Color.BLACK);
+        if (this.drawPageIndicator) {
+            // TODO: Create way to show what the current page is
+            Array<Actor> pages = getPages();
+            int currentPageIndex = getCurrentPageIndex();
+            float x, y = getY() + 15, radius = 10;
+            float widthOfAllCircles = (pages.size - 1) * (radius * 2);
+            for (int i = 0; i < pages.size; i++) {
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                if (currentPageIndex == i) {
+                    shapeRenderer.setColor(Color.GRAY);
+                } else {
+                    shapeRenderer.setColor(Color.BLACK);
+                }
+                x = getX() + (getWidth() / 2) - (widthOfAllCircles / 2);
+                x += (i * radius * 2);
+                shapeRenderer.circle(x, y, radius);
+                shapeRenderer.end();
             }
-            x = getX() + (getWidth() / 2) - (widthOfAllCircles / 2);
-            x += (i * radius * 2);
-            shapeRenderer.circle(x, y, radius);
-            shapeRenderer.end();
         }
     }
 

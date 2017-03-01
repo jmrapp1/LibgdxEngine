@@ -18,8 +18,6 @@ public abstract class AbstractParticle {
 
 	protected static final float PIXELS_TO_METERS = 100f;
 
-	protected World world;
-
 	protected ParticleShapeType shapeType;
 	protected Vector2 position;
 	protected Vector2 direction;
@@ -44,13 +42,12 @@ public abstract class AbstractParticle {
 	protected float lifeStart;
 
 
-	public AbstractParticle(World world, short categoryBits, short maskBits) {
-		this.world = world;
+	public AbstractParticle(short categoryBits, short maskBits) {
 		this.categoryBits = categoryBits;
 		this.maskBits = maskBits;
 	}
 
-	public void create(ParticleShapeType shapeType, Vector2 position, Vector2 direction, Vector2 gravityResistance, Vector2 velocity, Sprite sprite,
+	public void create(World world, ParticleShapeType shapeType, Vector2 position, Vector2 direction, Vector2 gravityResistance, Vector2 velocity, Sprite sprite,
 			Color startColor, Color endColor, float lifeTime, float friction, float initAlpha,
 			float alphaDecay, float rotationalVel, float density, float restitution, boolean active, boolean checkPhysics, boolean collideWithWorld) {
 		this.shapeType = shapeType;
@@ -69,7 +66,7 @@ public abstract class AbstractParticle {
 		this.restitution = restitution;
 		this.collideWithWorld = collideWithWorld;
 		if (checkPhysics) {
-			createBody();
+			createBody(world);
 			body.applyForceToCenter(velocity.scl(direction), true);
 			body.applyTorque(rotationalVel, true);
 		}
@@ -80,31 +77,35 @@ public abstract class AbstractParticle {
 		lifeStart = Timer.getGameTimeElapsed();
 	}
 
-	private void createBody() {
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyDef.BodyType.DynamicBody;
-		bodyDef.position.set(position.x / PIXELS_TO_METERS, position.y / PIXELS_TO_METERS);
-		body = world.createBody(bodyDef);
-		Shape shape = null;
-		if (shapeType == ParticleShapeType.CIRCLE) {
-			shape = new CircleShape();
-			shape.setRadius(sprite.getHeight() * sprite.getScaleY() / 2 / PIXELS_TO_METERS);
-		} else if (shapeType == ParticleShapeType.BOX){
-			shape = new PolygonShape();
-			((PolygonShape)shape).setAsBox(((sprite.getWidth() * sprite.getScaleX()) / 2) / PIXELS_TO_METERS, ((sprite.getHeight() * sprite.getScaleY())/ 2) / PIXELS_TO_METERS);
+	private void createBody(World world) {
+		if (!world.isLocked()) {
+			BodyDef bodyDef = new BodyDef();
+			bodyDef.type = BodyDef.BodyType.DynamicBody;
+			bodyDef.position.set(position.x / PIXELS_TO_METERS, position.y / PIXELS_TO_METERS);
+			body = world.createBody(bodyDef);
+			Shape shape = null;
+			if (shapeType == ParticleShapeType.CIRCLE) {
+				shape = new CircleShape();
+				shape.setRadius(sprite.getHeight() * sprite.getScaleY() / 2 / PIXELS_TO_METERS);
+			} else if (shapeType == ParticleShapeType.BOX) {
+				shape = new PolygonShape();
+				((PolygonShape) shape).setAsBox(((sprite.getWidth() * sprite.getScaleX()) / 2) / PIXELS_TO_METERS, ((sprite.getHeight() * sprite.getScaleY()) / 2) / PIXELS_TO_METERS);
+			}
+
+			FixtureDef fixtureDef = new FixtureDef();
+			fixtureDef.shape = shape;
+			fixtureDef.density = density;
+			fixtureDef.friction = friction;
+			fixtureDef.restitution = restitution;
+			fixtureDef.filter.categoryBits = categoryBits;
+			fixtureDef.filter.maskBits = maskBits;
+
+			body.createFixture(fixtureDef);
+
+			shape.dispose();
+		} else {
+			setToDispose();
 		}
-
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-		fixtureDef.density = density;
-		fixtureDef.friction = friction;
-		fixtureDef.restitution = restitution;
-		fixtureDef.filter.categoryBits = categoryBits;
-		fixtureDef.filter.maskBits = maskBits;
-
-		body.createFixture(fixtureDef);
-
-		shape.dispose();
 	}
 
 	public void update() {
@@ -133,6 +134,7 @@ public abstract class AbstractParticle {
 	public void dispose(AbstractParticlePool pool, World world) {
 		active = false;
 		removeBody(world);
+		body = null;
 	}
 
 	public void setToDispose() {

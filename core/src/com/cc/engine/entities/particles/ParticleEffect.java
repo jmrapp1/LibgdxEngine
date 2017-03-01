@@ -11,16 +11,14 @@ public abstract class ParticleEffect {
 	protected ArrayList<ParticleSystem> systems;
 	protected AbstractParticlePool pool;
 	protected boolean shouldDispose;
-	protected World world;
 	protected Vector2 position;
 	
-	public ParticleEffect(AbstractParticlePool pool, World world, Vector2 position) {
+	public ParticleEffect(AbstractParticlePool pool, Vector2 position) {
 		this.pool = pool;
-		this.world = world;
 		this.position = position;
 	}
 	
-	public void update() {
+	public void update(World world) {
 		if (world != null && !world.isLocked()) {
 			for (int i = 0; i < systems.size(); i++) {
 				ParticleSystem sys = systems.get(i);
@@ -30,7 +28,7 @@ public abstract class ParticleEffect {
 						shouldDispose = true;
 					}
 				} else {
-					sys.update();
+					sys.update(world);
 				}
 			}
 		}
@@ -41,9 +39,9 @@ public abstract class ParticleEffect {
 			sys.render(sb);
 	}
 	
-	public void dispose() {
+	public void dispose(World world) {
 		for (ParticleSystem sys : systems)
-			sys.dispose();
+			sys.dispose(world);
 	}
 	
 	public boolean shouldDispose() {

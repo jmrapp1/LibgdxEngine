@@ -134,6 +134,10 @@ public class Carousel extends ScrollPane {
     @Override
     public void setScrollX(float pixels) {
         super.setScrollX(pixels);
+        calculateCurrentPageIndex();
+    }
+
+    private void calculateCurrentPageIndex () {
         final float scrollX = getScrollX();
         float pageX = 0;
         float pageWidth = 0;
@@ -178,6 +182,10 @@ public class Carousel extends ScrollPane {
     public void draw(Batch batch, float alpha) {
         super.draw(batch, alpha);
         if (this.drawPageIndicator) {
+            if (isPanning())
+            {
+                calculateCurrentPageIndex();
+            }
             // TODO: Create way to show what the current page is
             Array<Actor> pages = getPages();
             int currentPageIndex = getCurrentPageIndex();

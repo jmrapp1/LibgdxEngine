@@ -92,7 +92,13 @@ public class ParticleSystem {
 			if ((particles.size() < maxParticleCount && !spawnedAll) || constantSystem) {
 				float delay = MathUtils.random(delayBetweenSpawn.x, delayBetweenSpawn.x);
 				if (Timer.getGameTimeElapsed() - lastSpawn >= delay && !world.isLocked()) {
-					createParticle(world);
+					if (constantSystem) {
+						for (int i = 0; i < maxParticleCount; i++) {
+							createParticle(world);
+						}
+					} else {
+						createParticle(world);
+					}
 					lastSpawn = Timer.getGameTimeElapsed();
 				}
 			} else {
@@ -135,10 +141,10 @@ public class ParticleSystem {
 	protected void createParticle(World world) {
 		if (!shouldDispose) {
 			AbstractParticle particle = pool.getParticle(world);
-			Vector2 pos = position;
+			Vector2 pos = position.cpy(); //Dont modify the original position, so copy it
 			Sprite sprite = sprites[MathUtils.random(0, sprites.length - 1)];
 			if (minSpread != null && maxSpread != null) {
-				pos = position.add(MathUtils.random(minSpread.x, maxSpread.x), MathUtils.random(minSpread.y, maxSpread.y));
+				pos = pos.add(MathUtils.random(minSpread.x, maxSpread.x), MathUtils.random(minSpread.y, maxSpread.y));
 			}
 			if (scaleBounds != null) {
 				sprite = new Sprite(sprite);

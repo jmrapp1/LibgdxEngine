@@ -133,19 +133,21 @@ public class ParticleSystem {
 	}
 	
 	protected void createParticle(World world) {
-		AbstractParticle particle = pool.getParticle(world);
-		Vector2 pos = position;
-		Sprite sprite = sprites[MathUtils.random(0, sprites.length - 1)];
-		if (minSpread != null && maxSpread != null) {
-			pos = position.add(MathUtils.random(minSpread.x, maxSpread.x), MathUtils.random(minSpread.y, maxSpread.y));
+		if (!shouldDispose) {
+			AbstractParticle particle = pool.getParticle(world);
+			Vector2 pos = position;
+			Sprite sprite = sprites[MathUtils.random(0, sprites.length - 1)];
+			if (minSpread != null && maxSpread != null) {
+				pos = position.add(MathUtils.random(minSpread.x, maxSpread.x), MathUtils.random(minSpread.y, maxSpread.y));
+			}
+			if (scaleBounds != null) {
+				sprite = new Sprite(sprite);
+				float rand = MathUtils.random(scaleBounds.x, scaleBounds.y);
+				sprite.setScale(rand, rand);
+			}
+			particle.create(world, shapeType, pos, calculateDirection(MathUtils.random(angleBounds.x, angleBounds.y)), minGravityResBounds != null && maxGravityResBounds != null ? new Vector2(MathUtils.random(minGravityResBounds.x, maxGravityResBounds.x), MathUtils.random(minGravityResBounds.y, maxGravityResBounds.y)) : null, new Vector2(Math.abs(MathUtils.random(minVelocityBounds.x, maxVelocityBounds.x)), Math.abs(MathUtils.random(minVelocityBounds.y, maxVelocityBounds.y))), new Sprite(sprite), startColor, endColor, MathUtils.random(lifeTimeBounds.x, lifeTimeBounds.y), friction, alphaBounds != null ? MathUtils.random(alphaBounds.x, alphaBounds.y) : 1, alphaDecay, rotationVelBounds != null ? MathUtils.random(rotationVelBounds.x, rotationVelBounds.y) : 0, MathUtils.random(densityBounds.x, densityBounds.y), MathUtils.random(restitutionBounds.x, restitutionBounds.y), true, checkPhysics, collideWithWorld);
+			particles.add(particle);
 		}
-		if (scaleBounds != null) {
-			sprite = new Sprite(sprite);
-			float rand = MathUtils.random(scaleBounds.x, scaleBounds.y);
-			sprite.setScale(rand, rand);
-		}
-		particle.create(world, shapeType, pos, calculateDirection(MathUtils.random(angleBounds.x, angleBounds.y)), minGravityResBounds != null && maxGravityResBounds != null ? new Vector2(MathUtils.random(minGravityResBounds.x, maxGravityResBounds.x), MathUtils.random(minGravityResBounds.y, maxGravityResBounds.y)) : null, new Vector2(Math.abs(MathUtils.random(minVelocityBounds.x, maxVelocityBounds.x)), Math.abs(MathUtils.random(minVelocityBounds.y, maxVelocityBounds.y))), new Sprite(sprite), startColor, endColor, MathUtils.random(lifeTimeBounds.x, lifeTimeBounds.y), friction, alphaBounds != null ? MathUtils.random(alphaBounds.x, alphaBounds.y) : 1, alphaDecay, rotationVelBounds != null ? MathUtils.random(rotationVelBounds.x, rotationVelBounds.y) : 0, MathUtils.random(densityBounds.x, densityBounds.y), MathUtils.random(restitutionBounds.x, restitutionBounds.y), true, checkPhysics, collideWithWorld);
-		particles.add(particle);
 	}
 
 	public void setToDispose() {

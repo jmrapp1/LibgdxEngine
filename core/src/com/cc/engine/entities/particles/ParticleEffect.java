@@ -40,6 +40,8 @@ public abstract class ParticleEffect {
 	}
 	
 	public void dispose(World world) {
+		if (!shouldDispose)
+			setToDispose();
 		for (ParticleSystem sys : systems)
 			sys.dispose(world);
 	}

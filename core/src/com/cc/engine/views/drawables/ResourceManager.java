@@ -50,6 +50,15 @@ public class ResourceManager {
 		return sprite;
 	}
 
+	public SpriteDrawable loadAndSetSizeSpriteDrawable(String id, String loc, float width, float height) {
+		SpriteDrawable sprite = loadSpriteDrawable(id, loc);
+		float sx = width / sprite.getWidth();
+		float sy = height / sprite.getHeight();
+		sprite.getSprite().setScale(sx, sy);
+		sprite.getSprite().setOrigin(0, 0);
+		return sprite;
+	}
+
 	public Skin loadSkin(String id, String path) {
 		Skin skin = new Skin(Gdx.files.internal(path));
 		skins.put(id, skin);

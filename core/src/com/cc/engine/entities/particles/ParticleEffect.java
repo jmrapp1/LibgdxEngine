@@ -18,7 +18,7 @@ public abstract class ParticleEffect {
 		this.position = position;
 	}
 	
-	public void update(World world) {
+	public void update(World world, float cameraX, float cameraY) {
 		if (world != null && !world.isLocked()) {
 			for (int i = 0; i < systems.size(); i++) {
 				ParticleSystem sys = systems.get(i);
@@ -28,15 +28,15 @@ public abstract class ParticleEffect {
 						shouldDispose = true;
 					}
 				} else {
-					sys.update(world);
+					sys.update(world, cameraX, cameraY);
 				}
 			}
 		}
 	}
 	
-	public void render(SpriteBatch sb) {
+	public void render(SpriteBatch sb, float cameraX, float cameraY) {
 		for (ParticleSystem sys : systems)
-			sys.render(sb);
+			sys.render(sb, cameraX, cameraY);
 	}
 	
 	public void dispose(World world) {

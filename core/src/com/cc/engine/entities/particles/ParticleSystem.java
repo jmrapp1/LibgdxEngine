@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.cc.engine.utils.Settings;
 import com.cc.engine.utils.Timer;
 
 public class ParticleSystem {
@@ -80,7 +81,7 @@ public class ParticleSystem {
 
 	}
 	
-	public void update(World world) {
+	public void update(World world, float cameraX, float cameraY) {
 		if (delayBetweenSpawn.equals(Vector2.Zero)) {
 			if (!spawnedAll) {
 				for (int i = 0; i < maxParticleCount; i++) {
@@ -111,7 +112,7 @@ public class ParticleSystem {
 		for (int i = 0; i < particles.size(); i++) {
 			AbstractParticle p = particles.get(i);
 			if (p != null) {
-				if (!p.isActive()) {
+				if (!p.isActive() && inProjection(p.getX(), p.getY(), p.getWidth(), p.getHeight(), cameraX, cameraY)) {
 					p.dispose(pool, world);
 					particles.remove(p);
 					if (particles.size() == 0 && !constantSystem) {
@@ -124,13 +125,17 @@ public class ParticleSystem {
 		}
 	}
 	
-	public void render(SpriteBatch sb) {
+	public void render(SpriteBatch sb, float cameraX, float cameraY) {
 		for (int i = 0; i < particles.size(); i++) {
 			AbstractParticle p = particles.get(i);
-			if (p.isActive()) {
+			if (p.isActive() && inProjection(p.getX(), p.getY(), p.getWidth(), p.getHeight(), cameraX, cameraY)) {
 				particles.get(i).render(sb);
 			}
 		}
+	}
+
+	private boolean inProjection(float x, float y, float width, float height, float cameraX, float cameraY) {
+		return x - width >= cameraX - Settings.getWidth() && x <= cameraX + Settings.getWidth() && y - height >= cameraY - Settings.getHeight() && y <= cameraY + Settings.getHeight();
 	}
 	
 	public void dispose(World world) {

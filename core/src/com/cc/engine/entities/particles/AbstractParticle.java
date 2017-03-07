@@ -41,7 +41,6 @@ public abstract class AbstractParticle {
 	protected boolean collideWithWorld;
 	protected float lifeStart;
 
-
 	public AbstractParticle(short categoryBits, short maskBits) {
 		this.categoryBits = categoryBits;
 		this.maskBits = maskBits;
@@ -150,5 +149,21 @@ public abstract class AbstractParticle {
 	public Body getBody() {
 		return body;
 	}
-	
+
+	public float getX() {
+		return position.x;
+	}
+
+	public float getY() {
+		return position.y;
+	}
+
+	public float getWidth() {
+		return sprite.getWidth();
+	}
+
+	public float getHeight() {
+		return sprite.getHeight();
+	}
+
 }

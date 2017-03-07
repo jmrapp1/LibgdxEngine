@@ -13,20 +13,20 @@ public class ParticleManager {
 	private ParticleManager() {
 	}
 	
-	public void update(World world) {
+	public void update(World world, float cameraX, float cameraY) {
 		for (int i = 0; i < effects.size(); i++) {
 			ParticleEffect effect = effects.get(i);
 			if (effect.shouldDispose()) {
 				effects.remove(effect);
 			} else {
-				effect.update(world);
+				effect.update(world, cameraX, cameraY);
 			}
 		}
 	}
 	
-	public void render(SpriteBatch sb) {
+	public void render(SpriteBatch sb, float cameraX, float cameraY) {
 		for (ParticleEffect effect : effects)
-			effect.render(sb);
+			effect.render(sb, cameraX, cameraY);
 	}
 	
 	public void dipose(World world) {

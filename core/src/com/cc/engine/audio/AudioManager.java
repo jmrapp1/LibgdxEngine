@@ -55,6 +55,10 @@ public class AudioManager {
         }
     }
 
+    /**
+     * @param id
+     * @param volume Number between 0 and 1
+     */
     public void playMusic(String id, float volume) {
         Music music = getMusic(id);
         if (music != null) {
@@ -92,6 +96,10 @@ public class AudioManager {
         return sound;
     }
 
+    /**
+     * @param id
+     * @param volume Number between 0 and 1
+     */
     public Music loopMusic(String id, float volume) {
         Music music = getMusic(id);
         if (music != null) {

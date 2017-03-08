@@ -9,7 +9,7 @@ public class SoundManager {
 
 	private static SoundManager instance = new SoundManager();
 	private final HashMap<String, Sound> sounds = new HashMap<String, Sound>();
-	
+
 	private SoundManager() {
 
 	}
@@ -28,7 +28,11 @@ public class SoundManager {
 			sound.play();
 		}
 	}
-	
+
+	/**
+	 * @param id
+	 * @param volume Number between 0 and 1
+	 */
 	public void playSound(String id, float volume) {
 		Sound sound = getSound(id);
 		if (sound != null) {
@@ -44,7 +48,12 @@ public class SoundManager {
 		}
 		return sound;
 	}
-	
+
+	/**
+	 * @param id
+	 * @param volume Number between 0 and 1
+	 * @return
+	 */
 	public Sound loopSound(String id, float volume) {
 		Sound sound = getSound(id);
 		if (sound != null) {

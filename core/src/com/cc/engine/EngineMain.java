@@ -3,6 +3,7 @@ package com.cc.engine;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +15,7 @@ import com.cc.engine.views.screens.ScreenManager;
 public class EngineMain extends ApplicationAdapter {
 
 	protected SpriteBatch sb;
+	protected Color clearColor = new Color(0, 0, 0, 1);
 	protected boolean paused;
 	protected long lastBack;
 
@@ -41,7 +43,7 @@ public class EngineMain extends ApplicationAdapter {
 		}
 
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		Gdx.gl20.glClearColor(0f, 0f, 0f, 1);
+		Gdx.gl20.glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 
 		if (ScreenManager.getCurrent() != null) {
 			ScreenManager.getCurrent().render(sb);

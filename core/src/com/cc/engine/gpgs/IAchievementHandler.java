@@ -16,4 +16,6 @@ public interface IAchievementHandler {
 
     void showAhchievementsGPGS();
 
+    void showLeaderboardsGPGS();
+
 }

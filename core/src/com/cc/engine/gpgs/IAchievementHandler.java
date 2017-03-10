@@ -18,4 +18,6 @@ public interface IAchievementHandler {
 
     void showLeaderboardsGPGS();
 
+    void submitLeaderboardScore(String id, int score);
+
 }

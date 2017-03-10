@@ -19,7 +19,7 @@ android {
     }
     defaultConfig {
         applicationId "com.cc.engine"
-        minSdkVersion 8
+        minSdkVersion 14
         targetSdkVersion 24
     }
 }
@@ -123,4 +123,14 @@ idea {
     }
 }
 dependencies {
+}
+
+publishing {
+    publications {
+        PublicationToMavenLocal(MavenPublication) {
+            groupId 'com.cc.engine'
+            artifactId 'android'
+            version '1.0'
+        }
+    }
 }

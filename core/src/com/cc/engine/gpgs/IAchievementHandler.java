@@ -8,6 +8,12 @@ package com.cc.engine.gpgs;
  */
 public interface IAchievementHandler {
 
-    void unlockAchievement(String id);
+    boolean isSignedInGSPS();
+
+    void signInGSPS();
+
+    void unlockAchievementGPGS(String achievementId);
+
+    void showAhchievementsGPGS();
 
 }

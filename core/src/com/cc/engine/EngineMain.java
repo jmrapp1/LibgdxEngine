@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.cc.engine.audio.AudioManager;
+import com.cc.engine.input.InputController;
 import com.cc.engine.utils.Settings;
 import com.cc.engine.utils.Timer;
 import com.cc.engine.views.drawables.ResourceManager;
@@ -74,6 +76,7 @@ public class EngineMain extends ApplicationAdapter {
 	public void dispose() {
 		sb.dispose();
 		ResourceManager.getInstance().dispose();
+		InputController.getInstance().clearProcessors();
 	}
 
 	public static void instantiateSettings() {

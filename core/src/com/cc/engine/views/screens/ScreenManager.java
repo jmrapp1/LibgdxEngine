@@ -7,13 +7,17 @@ public class ScreenManager {
 
 	private static Screen current, last;
 	
-	public static void setScreen(Screen s) {
-		if (current != null) {
+	public static void setScreen(Screen s, boolean dispose) {
+		if (current != null && dispose) {
 			current.dispose();
 		}
 		last = current;
 		current = s;
 		current.create();
+	}
+
+	public static void setScreen(Screen s) {
+		setScreen(s, true);
 	}
 	
 	public static void goBack() {

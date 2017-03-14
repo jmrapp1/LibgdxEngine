@@ -76,7 +76,7 @@ public class EngineMain extends ApplicationAdapter {
 	public void dispose() {
 		sb.dispose();
 		ResourceManager.getInstance().dispose();
-		InputController.getInstance().clearProcessors();
+		//InputController.getInstance().clearProcessors();
 	}
 
 	public static void instantiateSettings() {

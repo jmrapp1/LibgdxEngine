@@ -17,25 +17,24 @@ import com.cc.engine.world.ai.heuristic.ManhattanDistance;
  */
 public class TiledGraph implements IndexedGraph<TiledGraphNode> {
 
-    private float pixelsToMeters = 100;
-
     private Array<TiledGraphNode> nodes;
-    private int width, height;
-    private float nodePixelSize;
+    private INodeCoordinateConverter nodeCoordinateConverter;
 
-    public TiledGraph(Array<TiledGraphNode> nodes, int width, int height, float nodePixelSize) {
+    private int width, height;
+
+    public TiledGraph(Array<TiledGraphNode> nodes, int width, int height, INodeCoordinateConverter nodeCoordinateConverter) {
         this.nodes = nodes;
         this.width = width;
         this.height = height;
-        this.nodePixelSize = nodePixelSize;
+        this.nodeCoordinateConverter = nodeCoordinateConverter;
     }
 
     public GraphPath<TiledGraphNode> findPath(IndexedAStarPathFinder<TiledGraphNode> pathfinder, Vector2 startPos, Vector2 goalPos) {
         GraphPath<TiledGraphNode> path = new DefaultGraphPath<TiledGraphNode>();
-        int iSX = getNodeCoordinatesFromWorld(startPos.x);
-        int iSY = getNodeCoordinatesFromWorld(startPos.y);
-        int iGX = getNodeCoordinatesFromWorld(goalPos.x);
-        int iGY = getNodeCoordinatesFromWorld(goalPos.y);
+        int iSX = nodeCoordinateConverter.nodeCoordinateFromWorld(startPos.x);
+        int iSY = nodeCoordinateConverter.nodeCoordinateFromWorld(startPos.y);
+        int iGX = nodeCoordinateConverter.nodeCoordinateFromWorld(goalPos.x);
+        int iGY = nodeCoordinateConverter.nodeCoordinateFromWorld(goalPos.y);
         int startIndex = (iSY * height) + iSX;
         int goalIndex = (iGY * height) + iGX;
         boolean resultFound = pathfinder.searchNodePath(getNode(startIndex), getNode(goalIndex), new ManhattanDistance(), path);
@@ -44,12 +43,8 @@ public class TiledGraph implements IndexedGraph<TiledGraphNode> {
         return null;
     }
 
-    public int getNodeCoordinatesFromWorld(float pixelLocation) {
-        return (int)(pixelLocation * pixelsToMeters / nodePixelSize); //Multiply by 100 to get to pixel coordinates, then divide to get pixels to node (tile) size
-    }
-
-    public float getNodePixelSize() {
-        return nodePixelSize;
+    public INodeCoordinateConverter getNodeCoordinateConverter() {
+        return nodeCoordinateConverter;
     }
 
     public TiledGraphNode getNode(int index) {
@@ -69,14 +64,6 @@ public class TiledGraph implements IndexedGraph<TiledGraphNode> {
     @Override
     public Array<Connection<TiledGraphNode>> getConnections(TiledGraphNode fromNode) {
         return fromNode.getConnections();
-    }
-
-    public void setPixelsToMetersValue(float value) {
-        pixelsToMeters = value;
-    }
-
-    public float getPixelsToMeters() {
-        return pixelsToMeters;
     }
 
 }

@@ -50,7 +50,7 @@ public class PathFindingBehavior extends Arrive<Vector2> {
         this.targetEntity = targetEntity;
         this.graph = graph;
         this.pathfinder = pathfinder;
-        targetNodeLoc = new NodeLocation(graph.getNodeCoordinatesFromWorld(owner.getPosition().x), graph.getNodeCoordinatesFromWorld(owner.getPosition().y), graph.getNodePixelSize()); //Set location to owner in case path isnt found
+        targetNodeLoc = new NodeLocation(graph.getNodeCoordinateConverter().nodeCoordinateFromWorld(owner.getPosition().x), graph.getNodeCoordinateConverter().nodeCoordinateFromWorld(owner.getPosition().y)); //Set location to owner in case path isnt found
         this.target = targetNodeLoc; //Set target to this node object
         findPathToTarget(); //Find initial path
     }
@@ -146,8 +146,6 @@ public class PathFindingBehavior extends Arrive<Vector2> {
 
         /** The position vector to the node. Holds world coordinates */
         private Vector2 pos = new Vector2();
-        /** The tile size to calculate the location in the world that the tile is at */
-        private float tileSize;
 
         /**
          * Class that represents a node location that is being followed. This is used
@@ -155,10 +153,8 @@ public class PathFindingBehavior extends Arrive<Vector2> {
          * them to world coordinates for the owner to follow.
          * @param nodeX The node x position in the graph
          * @param nodeY The node y position in the graph
-         * @param tileSize The tile size of each node for node to world coordinate calculation
          */
-        public NodeLocation(float nodeX, float nodeY, float tileSize) {
-            this.tileSize = tileSize;
+        public NodeLocation(int nodeX, int nodeY) {
             setNodePosition(nodeX, nodeY);
         }
 
@@ -168,8 +164,8 @@ public class PathFindingBehavior extends Arrive<Vector2> {
          * @param nodeX The node x position in the graph
          * @param nodeY The node y position in the graph
          */
-        public void setNodePosition(float nodeX, float nodeY) {
-            pos.set(((nodeX * tileSize) + tileSize / 2) / graph.getPixelsToMeters(), ((nodeY * tileSize) + tileSize / 2) / graph.getPixelsToMeters()); //Convert node coordinates (in tiles) to pixels, move it to center of tile, then divide to get world coordinates
+        public void setNodePosition(int nodeX, int nodeY) {
+            pos.set(graph.getNodeCoordinateConverter().nodeCoordinateToWorld(nodeX), graph.getNodeCoordinateConverter().nodeCoordinateToWorld(nodeY)); //Convert node coordinates (in tiles) to pixels, move it to center of tile, then divide to get world coordinates
         }
 
         @Override

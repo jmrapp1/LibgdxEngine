@@ -17,7 +17,7 @@ import com.cc.engine.world.ai.heuristic.ManhattanDistance;
  */
 public class TiledGraph implements IndexedGraph<TiledGraphNode> {
 
-    private static float PIXELS_TO_METERS = 10;
+    private static float PIXELS_TO_METERS = 100;
 
     private Array<TiledGraphNode> nodes;
     private int width, height;

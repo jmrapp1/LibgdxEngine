@@ -3,10 +3,12 @@ package com.cc.engine.world.ai;
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
+import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.cc.engine.world.ai.converter.INodeCoordinateConverter;
 import com.cc.engine.world.ai.heuristic.ManhattanDistance;
 
 /**
@@ -18,7 +20,7 @@ import com.cc.engine.world.ai.heuristic.ManhattanDistance;
 public class TiledGraph implements IndexedGraph<TiledGraphNode> {
 
     private Array<TiledGraphNode> nodes;
-    private INodeCoordinateConverter nodeCoordinateConverter;
+    private com.cc.engine.world.ai.converter.INodeCoordinateConverter nodeCoordinateConverter;
 
     private int width, height;
 
@@ -30,6 +32,10 @@ public class TiledGraph implements IndexedGraph<TiledGraphNode> {
     }
 
     public GraphPath<TiledGraphNode> findPath(IndexedAStarPathFinder<TiledGraphNode> pathfinder, Vector2 startPos, Vector2 goalPos) {
+        return findPath(pathfinder, new ManhattanDistance(), startPos, goalPos);
+    }
+
+    public GraphPath<TiledGraphNode> findPath(IndexedAStarPathFinder<TiledGraphNode> pathfinder, Heuristic<TiledGraphNode> searchHeuristic, Vector2 startPos, Vector2 goalPos) {
         GraphPath<TiledGraphNode> path = new DefaultGraphPath<TiledGraphNode>();
         int iSX = nodeCoordinateConverter.nodeCoordinateFromWorld(startPos.x);
         int iSY = nodeCoordinateConverter.nodeCoordinateFromWorld(startPos.y);
@@ -37,7 +43,7 @@ public class TiledGraph implements IndexedGraph<TiledGraphNode> {
         int iGY = nodeCoordinateConverter.nodeCoordinateFromWorld(goalPos.y);
         int startIndex = (iSY * height) + iSX;
         int goalIndex = (iGY * height) + iGX;
-        boolean resultFound = pathfinder.searchNodePath(getNode(startIndex), getNode(goalIndex), new ManhattanDistance(), path);
+        boolean resultFound = pathfinder.searchNodePath(getNode(startIndex), getNode(goalIndex), searchHeuristic, path);
         if (resultFound)
             return path;
         return null;

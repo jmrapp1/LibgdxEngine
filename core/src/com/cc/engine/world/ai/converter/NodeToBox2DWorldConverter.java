@@ -1,4 +1,4 @@
-package com.cc.engine.world.ai;
+package com.cc.engine.world.ai.converter;
 
 /**
  * Created with IntelliJ IDEA.

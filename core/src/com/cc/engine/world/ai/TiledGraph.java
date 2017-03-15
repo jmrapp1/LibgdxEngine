@@ -32,7 +32,7 @@ public class TiledGraph implements IndexedGraph<TiledGraphNode> {
 
     public GraphPath<TiledGraphNode> findPath(IndexedAStarPathFinder<TiledGraphNode> pathfinder, Vector2 startPos, Vector2 goalPos) {
         GraphPath<TiledGraphNode> path = new DefaultGraphPath<TiledGraphNode>();
-        int iSX = (int)(startPos.x * PIXELS_TO_METERS / nodePixelSize); //Multiply by 100 to get to pixel coordinates
+        int iSX = (int)(startPos.x * PIXELS_TO_METERS / nodePixelSize); //Multiply by 100 to get to pixel coordinates, then divide to get pixels to node (tile) size
         int iSY = (int)(startPos.y * PIXELS_TO_METERS / nodePixelSize);
         int iGX = (int)(goalPos.x * PIXELS_TO_METERS / nodePixelSize);
         int iGY = (int)(goalPos.y * PIXELS_TO_METERS / nodePixelSize);

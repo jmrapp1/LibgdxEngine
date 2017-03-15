@@ -1,4 +1,4 @@
-package com.cc.engine.entities.particles;
+package com.cc.engine.world.entities.particles;
 
 import com.badlogic.gdx.physics.box2d.World;
 

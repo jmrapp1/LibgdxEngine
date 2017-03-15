@@ -1,4 +1,4 @@
-package com.cc.engine.tiled.renderers;
+package com.cc.engine.views.tiled.renderers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

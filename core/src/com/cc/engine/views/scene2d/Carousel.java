@@ -1,4 +1,4 @@
-package com.cc.engine.scene2d;
+package com.cc.engine.views.scene2d;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;

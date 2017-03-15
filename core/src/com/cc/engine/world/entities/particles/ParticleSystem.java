@@ -1,4 +1,4 @@
-package com.cc.engine.entities.particles;
+package com.cc.engine.world.entities.particles;
 
 import java.util.ArrayList;
 

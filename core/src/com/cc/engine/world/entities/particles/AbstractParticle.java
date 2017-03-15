@@ -1,4 +1,4 @@
-package com.cc.engine.entities.particles;
+package com.cc.engine.world.entities.particles;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;

@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.Array;
  */
 public class GraphConverter {
 
-    public static TiledGraph tiledMapToGraph(TiledMapTileLayer colliderLayer) {
+    public static TiledGraph tiledMapToGraph(TiledMapTileLayer colliderLayer, float tileSize) {
         TiledGraphNode[][] nodes = new TiledGraphNode[colliderLayer.getWidth()][colliderLayer.getHeight()];
         Array<TiledGraphNode> indexedNodes = new Array<TiledGraphNode>(colliderLayer.getWidth() * colliderLayer.getHeight());
 
@@ -46,7 +46,7 @@ public class GraphConverter {
             }
         }
 
-        return new TiledGraph(indexedNodes);
+        return new TiledGraph(indexedNodes, colliderLayer.getWidth(), colliderLayer.getHeight(), tileSize);
     }
 
 }

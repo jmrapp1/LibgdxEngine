@@ -17,7 +17,7 @@ import com.cc.engine.world.ai.heuristic.ManhattanDistance;
  */
 public class TiledGraph implements IndexedGraph<TiledGraphNode> {
 
-    private static float PIXELS_TO_METERS = 100;
+    private float pixelsToMeters = 100;
 
     private Array<TiledGraphNode> nodes;
     private int width, height;
@@ -32,10 +32,10 @@ public class TiledGraph implements IndexedGraph<TiledGraphNode> {
 
     public GraphPath<TiledGraphNode> findPath(IndexedAStarPathFinder<TiledGraphNode> pathfinder, Vector2 startPos, Vector2 goalPos) {
         GraphPath<TiledGraphNode> path = new DefaultGraphPath<TiledGraphNode>();
-        int iSX = (int)(startPos.x * PIXELS_TO_METERS / nodePixelSize); //Multiply by 100 to get to pixel coordinates, then divide to get pixels to node (tile) size
-        int iSY = (int)(startPos.y * PIXELS_TO_METERS / nodePixelSize);
-        int iGX = (int)(goalPos.x * PIXELS_TO_METERS / nodePixelSize);
-        int iGY = (int)(goalPos.y * PIXELS_TO_METERS / nodePixelSize);
+        int iSX = (int)(startPos.x * pixelsToMeters / nodePixelSize); //Multiply by 100 to get to pixel coordinates, then divide to get pixels to node (tile) size
+        int iSY = (int)(startPos.y * pixelsToMeters / nodePixelSize);
+        int iGX = (int)(goalPos.x * pixelsToMeters / nodePixelSize);
+        int iGY = (int)(goalPos.y * pixelsToMeters / nodePixelSize);
         int startIndex = (iSY * height) + iSX;
         int goalIndex = (iGY * height) + iGX;
         boolean resultFound = pathfinder.searchNodePath(getNode(startIndex), getNode(goalIndex), new ManhattanDistance(), path);
@@ -65,6 +65,14 @@ public class TiledGraph implements IndexedGraph<TiledGraphNode> {
     @Override
     public Array<Connection<TiledGraphNode>> getConnections(TiledGraphNode fromNode) {
         return fromNode.getConnections();
+    }
+
+    public void setPixelsToMetersValue(float value) {
+        pixelsToMeters = value;
+    }
+
+    public float getPixelsToMeters() {
+        return pixelsToMeters;
     }
 
 }

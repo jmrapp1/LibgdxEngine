@@ -13,6 +13,9 @@ public class Timer {
 	/** The time that the game timer was started. */
 	private static boolean startGameTime;
 
+	/** Used to "slow" or "speed up" time */
+	private static float timeMultiplier = 1;
+
 	/** Private constructor; prevents construction outside the class (singleton design pattern) */
 	private Timer() {
 	}
@@ -21,9 +24,9 @@ public class Timer {
 	 * Updates the overall elapsed time and the game time.
 	 */
 	public static void update() {
-		timeElapsed += Gdx.graphics.getDeltaTime();
+		timeElapsed += Gdx.graphics.getDeltaTime() * timeMultiplier;
 		if (startGameTime) {
-			gameTime += Gdx.graphics.getDeltaTime();
+			gameTime += Gdx.graphics.getDeltaTime() * timeMultiplier;
 		}
 	}
 
@@ -55,6 +58,9 @@ public class Timer {
 		startGameTime = false;
 	}
 
+	public static void setTimeMultiplier(float multiplier) {
+		timeMultiplier = multiplier;
+	}
 
 	/**
 	 *  Resets and turns off the game timer.

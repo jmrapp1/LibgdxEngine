@@ -20,20 +20,14 @@ public class ScreenManager {
 		setScreen(s, true);
 	}
 
-	public static void goBack(boolean resume) {
+	public static void goBack() {
 		if (current != null) {
 			current.dispose();
 		}
 		Screen temp = last;
 		last = current;
 		current = temp;
-		if (resume) {
-			current.resume();
-		}
-	}
-
-	public static void goBack() {
-		goBack(true);
+		current.resume();
 	}
 	
 	public static Screen getCurrent() {

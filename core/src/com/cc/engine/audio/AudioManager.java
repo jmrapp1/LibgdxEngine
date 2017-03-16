@@ -12,6 +12,9 @@ public class AudioManager {
     private final HashMap<String, Sound> sounds = new HashMap<String, Sound>();
     private final HashMap<String, Music> music = new HashMap<String, Music>();
 
+    private Music currentPlayingMusic;
+    private boolean dontPlayAudio = false;
+
     private AudioManager() {
 
     }
@@ -33,9 +36,11 @@ public class AudioManager {
     }
 
     public void playSound(String id) {
-        Sound sound = getSound(id);
-        if (sound != null) {
-            sound.play();
+        if (!dontPlayAudio) {
+            Sound sound = getSound(id);
+            if (sound != null) {
+                sound.play();
+            }
         }
     }
 
@@ -48,10 +53,12 @@ public class AudioManager {
      * @param volume Number between 0 and 1
      */
     public void playSound(String id, float volume) {
-        Sound sound = getSound(id);
-        if (sound != null) {
-            long songId = sound.play();
-            sound.setVolume(songId, volume);
+        if (!dontPlayAudio) {
+            Sound sound = getSound(id);
+            if (sound != null) {
+                long songId = sound.play();
+                sound.setVolume(songId, volume);
+            }
         }
     }
 
@@ -60,20 +67,25 @@ public class AudioManager {
      * @param volume Number between 0 and 1
      */
     public void playMusic(String id, float volume) {
-        Music music = getMusic(id);
-        if (music != null) {
-            music.setVolume(volume);
-            if (music.isPlaying()) {
-                music.stop();
+        if (!dontPlayAudio) {
+            Music music = getMusic(id);
+            if (music != null) {
+                music.setVolume(volume);
+                if (music.isPlaying()) {
+                    music.stop();
+                }
+                music.play();
+                currentPlayingMusic = music;
             }
-            music.play();
         }
     }
 
     public Sound loopSound(String id) {
         Sound sound = getSound(id);
-        if (sound != null) {
-            sound.loop();
+        if (!dontPlayAudio) {
+            if (sound != null) {
+                sound.loop();
+            }
         }
         return sound;
     }
@@ -89,9 +101,11 @@ public class AudioManager {
      */
     public Sound loopSound(String id, float volume) {
         Sound sound = getSound(id);
-        if (sound != null) {
-            long songId = sound.loop();
-            sound.setVolume(songId, volume);
+        if (!dontPlayAudio) {
+            if (sound != null) {
+                long songId = sound.loop();
+                sound.setVolume(songId, volume);
+            }
         }
         return sound;
     }
@@ -102,15 +116,37 @@ public class AudioManager {
      */
     public Music loopMusic(String id, float volume) {
         Music music = getMusic(id);
-        if (music != null) {
-            music.setVolume(volume);
-            if (!music.isPlaying())
-            {
-                music.play();
+        if (!dontPlayAudio) {
+            if (music != null) {
+                music.setVolume(volume);
+                if (!music.isPlaying()) {
+                    music.play();
+                    currentPlayingMusic = music;
+                }
+                music.setLooping(true);
             }
-            music.setLooping(true);
         }
         return music;
+    }
+
+    public void stopPlayingMusic() {
+        if (currentPlayingMusic != null) {
+            currentPlayingMusic.stop();
+            currentPlayingMusic = null;
+        }
+    }
+
+    public void dontPlayAudio() {
+        dontPlayAudio = true;
+        stopPlayingMusic();
+    }
+
+    public void playAudio() {
+        dontPlayAudio = false;
+    }
+
+    public boolean playingAudio() {
+        return !dontPlayAudio;
     }
 
     public static AudioManager getInstance() {

@@ -33,5 +33,9 @@ public class ScreenManager {
 	public static Screen getCurrent() {
 		return current;
 	}
+
+	public static Screen getLast() {
+		return last;
+	}
 	
 }

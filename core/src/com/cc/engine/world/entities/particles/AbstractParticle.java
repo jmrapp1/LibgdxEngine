@@ -16,6 +16,8 @@ import com.cc.engine.utils.Timer;
 
 public abstract class AbstractParticle {
 
+	private static int total = 0;
+
 	protected static final float PIXELS_TO_METERS = 100f;
 
 	protected ParticleShapeType shapeType;
@@ -44,6 +46,7 @@ public abstract class AbstractParticle {
 	public AbstractParticle(short categoryBits, short maskBits) {
 		this.categoryBits = categoryBits;
 		this.maskBits = maskBits;
+		total++;
 	}
 
 	public void create(World world, ParticleShapeType shapeType, Vector2 position, Vector2 direction, Vector2 gravityResistance, Vector2 velocity, Sprite sprite,
@@ -134,6 +137,7 @@ public abstract class AbstractParticle {
 		active = false;
 		removeBody(world);
 		body = null;
+		pool.putParticle(this);
 	}
 
 	public void setToDispose() {

@@ -20,4 +20,6 @@ public interface IAchievementHandler {
 
     void submitLeaderboardScore(String id, int score);
 
+    void eventTriggered(String id, int increment);
+
 }

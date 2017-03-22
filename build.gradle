@@ -24,6 +24,7 @@ allprojects {
         roboVMVersion = '2.3.0'
         box2DLightsVersion = '1.4'
         aiVersion = '1.8.0'
+        gdxPayVersion = '0.10.3'
     }
 
     repositories {
@@ -79,6 +80,8 @@ project(":android") {
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        compile "com.badlogicgames.gdxpay:gdx-pay-android:$gdxPayVersion"
+        compile "com.badlogicgames.gdxpay:gdx-pay-android-googleplay:${gdxPayVersion}@aar"
     }
 }
 
@@ -95,6 +98,7 @@ project(":ios") {
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        compile "com.badlogicgames.gdxpay:gdx-pay-iosrobovm-apple:$gdxPayVersion"
     }
 }
 
@@ -109,6 +113,7 @@ project(":core") {
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        compile "com.badlogicgames.gdxpay:gdx-pay-client:$gdxPayVersion"
     }
 }
 
